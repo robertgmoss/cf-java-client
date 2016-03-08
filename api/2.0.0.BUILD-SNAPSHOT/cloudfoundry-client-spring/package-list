@@ -1,0 +1,5 @@
+org.cloudfoundry.spring.client
+org.cloudfoundry.spring.logging
+org.cloudfoundry.spring.uaa
+org.cloudfoundry.spring.util
+org.cloudfoundry.spring.util.network
