@@ -16,8 +16,70 @@
 
 package org.cloudfoundry.doppler;
 
-import org.cloudfoundry.AbstractIntegrationTest;
+import org.cloudfoundry.spring.client.SpringCloudFoundryClient;
+import org.cloudfoundry.spring.doppler.ReactorDopplerClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-public final class DopplerTest extends AbstractIntegrationTest {
+import java.time.Duration;
+
+@Configuration
+@EnableAutoConfiguration
+public class DopplerTest {
+
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(DopplerTest.class)
+            .web(false)
+            .run(args)
+            .getBean(Runner.class)
+            .run();
+    }
+
+    @Bean
+    SpringCloudFoundryClient cloudFoundryClient(@Value("${test.host}") String host,
+                                                @Value("${test.username}") String username,
+                                                @Value("${test.password}") String password,
+                                                @Value("${test.skipSslValidation:false}") Boolean skipSslValidation) {
+
+        return SpringCloudFoundryClient.builder()
+            .host(host)
+            .username(username)
+            .password(password)
+            .skipSslValidation(skipSslValidation)
+            .build();
+    }
+
+    @Bean
+    ReactorDopplerClient dopplerClient(SpringCloudFoundryClient cloudFoundryClient) {
+        return ReactorDopplerClient.builder()
+            .cloudFoundryClient(cloudFoundryClient)
+            .build();
+    }
+
+    @Component
+    private static final class Runner {
+
+        private final DopplerClient dopplerClient;
+
+        @Autowired
+        Runner(DopplerClient dopplerClient) {
+            this.dopplerClient = dopplerClient;
+        }
+
+        void run() {
+            this.dopplerClient
+                .containerMetrics(ContainerMetricsRequest.builder()
+                    .applicationId("1a95eadc-95c6-4675-aa07-8c02f80ea8a4")
+                    .build())
+                .toList()
+                .get(Duration.ofDays(1));
+        }
+
+    }
 
 }
