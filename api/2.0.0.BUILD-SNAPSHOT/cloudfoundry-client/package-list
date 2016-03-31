@@ -3,6 +3,7 @@ org.cloudfoundry.client
 org.cloudfoundry.client.v2
 org.cloudfoundry.client.v2.applications
 org.cloudfoundry.client.v2.applicationusageevents
+org.cloudfoundry.client.v2.buildpacks
 org.cloudfoundry.client.v2.domains
 org.cloudfoundry.client.v2.environmentvariablegroups
 org.cloudfoundry.client.v2.events
