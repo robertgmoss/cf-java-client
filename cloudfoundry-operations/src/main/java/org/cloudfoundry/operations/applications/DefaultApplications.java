@@ -396,7 +396,11 @@ public final class DefaultApplications implements Applications {
     public Mono<Void> unsetEnvironmentVariable(UnsetEnvironmentVariableApplicationRequest request) {
         return Mono
             .when(ValidationUtils.validate(request), this.spaceId)
-            .then(function((request1, spaceId) -> Mono.when(Mono.just(request1), getApplication(this.cloudFoundryClient, request1.getName(), spaceId))))
+            .then(function((request1, spaceId) -> Mono
+                .when(
+                    Mono.just(request1),
+                    getApplication(this.cloudFoundryClient, request1.getName(), spaceId)
+                )))
             .then(function((request1, resource) ->
                 requestUpdateApplicationEnvironment(
                     this.cloudFoundryClient,
