@@ -9,7 +9,7 @@ org.cloudfoundry.client.v2.environmentvariablegroups
 org.cloudfoundry.client.v2.events
 org.cloudfoundry.client.v2.featureflags
 org.cloudfoundry.client.v2.info
-org.cloudfoundry.client.v2.job
+org.cloudfoundry.client.v2.jobs
 org.cloudfoundry.client.v2.organizationquotadefinitions
 org.cloudfoundry.client.v2.organizations
 org.cloudfoundry.client.v2.privatedomains
