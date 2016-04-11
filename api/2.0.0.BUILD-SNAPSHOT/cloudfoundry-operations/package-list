@@ -1,5 +1,6 @@
 org.cloudfoundry.operations
 org.cloudfoundry.operations.applications
+org.cloudfoundry.operations.buildpacks
 org.cloudfoundry.operations.domains
 org.cloudfoundry.operations.organizations
 org.cloudfoundry.operations.routes
